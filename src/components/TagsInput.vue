@@ -4,15 +4,19 @@
 
     <div>{{ tags.length }}</div>
 
-    <div v-for="(tag, index) in tags" v-bind:id="index">{{ index + ' : ' + tag }}</div>
+    <div v-for="(tag, index) in tags" v-bind:id="index">
+        {{ tag }}
+        <a @click.prevent="removeTag(index)" href="#">x</a>
+    </div>
 
     <hr>
 
     <input 
         type="text" 
         v-model.trim="newTag" 
-        v-on:keydown.enter="tags.push(newTag)" 
-        @keydown.tab.prevent="tags.push(newTag)" 
+        v-on:keydown.enter="addNewTag" 
+        @keydown.tab.prevent="addNewTag"
+        @keydown.delete="removeLastTag" 
     />
 
     <p>newTag : {{ newTag }}</p>
@@ -29,6 +33,35 @@ export default {
         tags: ['vue', 'react', 'angular'],
 
         newTag: "",
-    })
+    }),
+
+    methods: {
+
+        addNewTag() {
+
+            if(this.newTag){
+
+                this.tags.push(this.newTag);
+
+                this.newTag = '';
+            }
+        },
+
+        removeTag (index) {
+
+            this.tags.splice(index, 1);
+        },
+
+        removeLastTag() {
+
+            if(this.newTag.length === 0){
+
+                this.removeTag(this.tags.length -1);
+
+            }
+            
+        }
+
+    }
 }
 </script>
