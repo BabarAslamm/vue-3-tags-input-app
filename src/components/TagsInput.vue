@@ -10,7 +10,7 @@
 
     <input 
         type="text" 
-        v-model="newTag" 
+        v-model.trim="newTag" 
         v-on:keydown.enter="tags.push(newTag)" 
         @keydown.tab.prevent="tags.push(newTag)" 
     />
