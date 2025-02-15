@@ -11,8 +11,9 @@
 </script>
 
 <template>
-  <tags-input />
+
   <TagsInput />
+  
 </template>
 
 <style>
