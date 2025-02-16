@@ -17,6 +17,7 @@
         v-on:keydown.enter="addNewTag" 
         @keydown.tab.prevent="addNewTag"
         @keydown.delete="removeLastTag" 
+        :class="{'tag-exists': tags.includes(newTag)}"
     />
 
     <p>newTag : {{ newTag }}</p>
@@ -65,3 +66,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.tag-exists {
+    color: red; 
+    text-decoration: line-through;
+}
+</style>
