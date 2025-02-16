@@ -17,7 +17,7 @@
         v-on:keydown.enter="addNewTag" 
         @keydown.tab.prevent="addNewTag"
         @keydown.delete="removeLastTag" 
-        :class="{'tag-exists': tags.includes(newTag)}"
+        :class="{'tag-exists':isTagExists }"
     />
 
     <p>newTag : {{ newTag }}</p>
@@ -36,11 +36,19 @@ export default {
         newTag: "",
     }),
 
+    computed: {
+
+        isTagExists(){
+
+           return this.tags.includes(this.newTag);
+        }
+    },
+
     methods: {
 
         addNewTag() {
 
-            if(this.newTag){
+            if(this.newTag && !this.isTagExists){
 
                 this.tags.push(this.newTag);
 
