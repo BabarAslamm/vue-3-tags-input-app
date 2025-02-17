@@ -1,132 +1,104 @@
 <template>
-    <h3>Tags</h3>
-    <div class="tags-container">
-        
-        <span v-for="(tag, index) in tags" :key="index" class="tag">
-            {{ tag }}
-            <a @click.prevent="removeTag(index)" href="#" class="tag-remove">&times;</a>
-        </span>
-        <input 
-            type="text" 
-            v-model.trim="newTag" 
-            v-on:keydown.enter="addNewTag" 
-            @keydown.tab.prevent="addNewTag"
-            @keydown.delete="removeLastTag" 
-            :class="{'tag-exists': isTagExists }"
-            class="tag-input"
-            placeholder="Add a tag..."
-        />
-    </div>
-
-    <p>newTag : {{ newTag }}</p>
+  <h3>Tags</h3>
+  <div class="tags-input-wrapper">
+    <span class="tag-item" v-for="(tag, index) in tags" :key="index">
+      {{ tag }}
+      <a class="remove-tag" @click.prevent="removeTag(index)" href="#"
+        >&times;</a
+      >
+    </span>
+    <input
+      class="tag-input"
+      type="text"
+      v-model.trim="newTag"
+      @keydown.enter="addNewTag"
+      @keydown.delete="removeLastTag"
+      @keydown.tab.prevent="addNewTag"
+      :class="{ 'tag-exists': isTagExists }"
+    />
+  </div>
 </template>
 
 <script>
 export default {
-    data: () => ({
-        tags: ['vue', 'react', 'angular'],
-        newTag: "",
-    }),
-    watch: {
-        newTag(newVal) {
-            if (newVal.indexOf(",") > -1) {
-                this.newTag = this.newTag.slice(0, -1);
-                this.addNewTag();
-            }
-        }
+  data: () => ({
+    tags: ["vue", "react", "angular"],
+    newTag: "",
+  }),
+  watch: {
+    newTag(newVal) {
+      if (newVal.indexOf(",") > -1) {
+        this.newTag = this.newTag.slice(0, -1);
+        this.addNewTag();
+      }
     },
-    computed: {
-        isTagExists() {
-            return this.tags.includes(this.newTag);
-        }
+  },
+  computed: {
+    isTagExists() {
+      return this.tags.includes(this.newTag);
     },
-    methods: {
-        addNewTag() {
-            if (this.newTag && !this.isTagExists) {
-                this.tags.push(this.newTag);
-                this.newTag = '';
-            }
-        },
-        removeTag(index) {
-            this.tags.splice(index, 1);
-        },
-        removeLastTag() {
-            if (this.newTag.length === 0) {
-                this.removeTag(this.tags.length - 1);
-            }
-        }
-    }
-}
+  },
+  methods: {
+    addNewTag() {
+      if (this.newTag && !this.isTagExists) {
+        this.tags.push(this.newTag);
+        this.newTag = "";
+      }
+    },
+    removeTag(index) {
+      this.tags.splice(index, 1);
+    },
+    removeLastTag() {
+      if (this.newTag.length === 0) {
+        this.removeTag(this.tags.length - 1);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-.tags-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #f9f9f9;
+.tag-input.tag-exists {
+  color: red;
+  text-decoration: line-through;
+}
+.tags-input-wrapper {
+  background: #fff;
+  padding: 0.5em;
+  border: 1px solid #dbdbdb;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 36px;
+  box-sizing: border-box;
 }
 
-.tag {
-    display: inline-flex;
-    align-items: center;
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 0.3em 0.7em;
-    border-radius: 2em;
-    font-size: 0.9em;
-    margin: 0.2em;
-    transition: background 0.3s;
-}
-
-.tag:hover {
-    background-color: #d0d0d0;
-}
-
-.tag-remove {
-    margin-left: 0.5em;
-    color: #888;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.tag-remove:hover {
-    color: #555;
+.tag-item {
+  color: #212529;
+  background-color: #eee;
+  margin-right: 0.3em;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 1.25em;
+  padding-left: 0.6em;
 }
 
 .tag-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    min-width: 100px;
-    padding: 0.3em;
-    font-size: 0.9em;
-    background: transparent;
-}
-
-.tag-input.tag-exists {
-    color: red;
-    text-decoration: line-through;
-}
-
-.tag-input::placeholder {
-    color: #aaa;
-    opacity: 0.7;
+  color: #495057;
+  flex: 1;
+  background: transparent;
+  border: none;
 }
 
 .tag-input:focus {
-    outline: none;
-    border-bottom: 2px solid #007bff;
+  outline: none;
 }
-
-.tag {
-    transition: transform 0.2s ease-in-out;
-}
-
-.tag-remove:focus {
-    outline: none;
+a.remove-tag {
+  text-decoration: none;
 }
 </style>
