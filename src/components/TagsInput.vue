@@ -1,5 +1,8 @@
 <template>
   <h3>Tags</h3>
+  <p>
+        <b>Selected Tags:</b> {{ selectedTags }}
+  </p>
   <div class="tags-input-wrapper">
     <span class="tag-item" v-for="(tag, index) in tags" :key="index">
       {{ tag }}
@@ -21,38 +24,48 @@
 
 <script>
 export default {
-  data: () => ({
-    tags: ["vue", "react", "angular"],
-    newTag: "",
-  }),
-  watch: {
-    newTag(newVal) {
-      if (newVal.indexOf(",") > -1) {
-        this.newTag = this.newTag.slice(0, -1);
-        this.addNewTag();
-      }
+   data(){
+        return {
+            tags: [...this.selectedTags],
+            newTag: "",
+        }
     },
-  },
-  computed: {
-    isTagExists() {
-      return this.tags.includes(this.newTag);
+
+    props:{
+        selectedTags:{
+            type: Array,
+            default: () => []
+        }
     },
-  },
-  methods: {
-    addNewTag() {
-      if (this.newTag && !this.isTagExists) {
-        this.tags.push(this.newTag);
-        this.newTag = "";
-      }
+
+    watch: {
+        newTag(newVal) {
+        if (newVal.indexOf(",") > -1) {
+            this.newTag = this.newTag.slice(0, -1);
+            this.addNewTag();
+        }
+        },
     },
-    removeTag(index) {
-      this.tags.splice(index, 1);
+    computed: {
+        isTagExists() {
+        return this.tags.includes(this.newTag);
+        },
     },
-    removeLastTag() {
-      if (this.newTag.length === 0) {
-        this.removeTag(this.tags.length - 1);
-      }
-    },
+    methods: {
+        addNewTag() {
+            if (this.newTag && !this.isTagExists) {
+                this.tags.push(this.newTag);
+                this.newTag = "";
+            }
+        },
+        removeTag(index) {
+            this.tags.splice(index, 1);
+        },
+        removeLastTag() {
+            if (this.newTag.length === 0) {
+                this.removeTag(this.tags.length - 1);
+            }
+        },
   },
 };
 </script>

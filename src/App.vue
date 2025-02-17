@@ -7,13 +7,29 @@
   //   }
   // }
 
+  export default {
+
+    data:() => ({
+
+        jsFrameworks : ["vue", "react", "angular"],
+
+    }),
+
+    mounted() {
+
+        setTimeout(() => {
+            this.jsFrameworks.push('NextJS')
+        }, 300);
+    },
+  }
+
 
 </script>
 
 <template>
 
-  <TagsInput />
-  
+  <TagsInput :selectedTags="jsFrameworks" />
+
 </template>
 
 <style>
