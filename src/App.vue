@@ -15,20 +15,27 @@
 
     }),
 
-    mounted() {
 
-        setTimeout(() => {
-            this.jsFrameworks.push('NextJS')
-        }, 300);
-    },
+    methods: {
+
+        handleChange(tags)
+        {
+            console.log('tags', tags);
+
+            this.jsFrameworks = [...tags]
+        }
+    }
+
+
   }
 
 
 </script>
 
 <template>
-
-  <TagsInput :selectedTags="jsFrameworks" />
+    <h3>Hello VueJs</h3>
+    {{ jsFrameworks }}
+  <TagsInput :selectedTags="jsFrameworks" @change="handleChange" />
 
 </template>
 

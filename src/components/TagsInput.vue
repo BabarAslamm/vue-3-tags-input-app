@@ -1,8 +1,5 @@
 <template>
-  <h3>Tags</h3>
-  <p>
-        <b>Selected Tags:</b> {{ selectedTags }}
-  </p>
+  
   <div class="tags-input-wrapper">
     <span class="tag-item" v-for="(tag, index) in tags" :key="index">
       {{ tag }}
@@ -38,6 +35,8 @@ export default {
         }
     },
 
+    emits: ['change'],
+
     watch: {
         newTag(newVal) {
         if (newVal.indexOf(",") > -1) {
@@ -56,10 +55,14 @@ export default {
             if (this.newTag && !this.isTagExists) {
                 this.tags.push(this.newTag);
                 this.newTag = "";
+
+                this.$emit('change', this.tags)
             }
         },
         removeTag(index) {
             this.tags.splice(index, 1);
+
+            this.$emit('change', this.tags)
         },
         removeLastTag() {
             if (this.newTag.length === 0) {
