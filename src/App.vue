@@ -13,6 +13,8 @@
 
         jsFrameworks : ["vue", "react", "angular"],
 
+        backendFrameworks : ['Laravel'],
+
     }),
 
 
@@ -33,9 +35,13 @@
 </script>
 
 <template>
-    <h3>Hello VueJs</h3>
-    {{ jsFrameworks }}
+    <h3>Frontend Framework</h3>
+    <div>{{ jsFrameworks }}</div>
   <TagsInput :selectedTags="jsFrameworks" @change="handleChange" />
+
+  <h3>Backend Framework</h3>
+    <div>{{ backendFrameworks }}</div>
+  <TagsInput :selectedTags="backendFrameworks" @change="backendFrameworks=[...$event]" />
 
 </template>
 
